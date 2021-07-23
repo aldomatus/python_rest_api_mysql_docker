@@ -80,9 +80,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
-712 / 5000
-Resultados de traducción
 This project is made with the intention of teaching how to use Docker with the backend technologies Flask and Mysql in the project we are going to take into account the following points:
 
 * Create the dockerfile that will have the necessary instructions to create a Python image that will later be converted into a single application.
