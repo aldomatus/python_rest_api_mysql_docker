@@ -277,6 +277,5 @@ flask_rest_api/media/
 
 
 .ipython/
-.env
 .envs/*
 !.envs/.local/
