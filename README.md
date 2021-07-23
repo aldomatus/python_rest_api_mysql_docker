@@ -94,14 +94,15 @@ This section should list any major frameworks that you built your project using.
 * [Docker](https://www.docker.com/)
 
 ### Libraries
-## SQLAlchemy (Offers an ORM along with a Core)
+
+#### SQLAlchemy (Offers an ORM along with a Core)
 The Python SQL Toolkit and Object Relational Mapper
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL.
 
-## Flask-Marshmallow (Serializer)
+#### Flask-Marshmallow (Serializer)
 Flask-Marshmallow is a thin integration layer for Flask (a Python web framework) and marshmallow (an object serialization/deserialization library) that adds additional features to marshmallow, including URL and Hyperlinks fields for HATEOAS-ready APIs. It also (optionally) integrates with Flask-SQLAlchemy.
 
-## Flask-SQLAlchemy 
+#### Flask-SQLAlchemy 
 Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to your application. It aims to simplify using SQLAlchemy with Flask by providing useful defaults and extra helpers that make it easier to accomplish common tasks.
 
 <!-- GETTING STARTED -->
@@ -111,11 +112,16 @@ Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to y
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+For this project you need to have Docker and Docker compose installed
+
+Link to install Docker engine:
+
+<a href="https://docs.docker.com/engine/install/ubuntu/">Linux</a>
+<a href="https://docs.docker.com/engine/install/">Linux</a>
+
+After installing docker engine install docker compose
+
+<a href="https://docs.docker.com/compose/install/">Linux Windows Mac</a>
 
 ### Installation
 
