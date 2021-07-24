@@ -114,39 +114,49 @@ Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to y
 
 For this project you need to have Docker and Docker compose installed
 
-Link to install Docker engine:
 
+<ol>
+<li>Link to install Docker engine:</li>
 <a href="https://docs.docker.com/engine/install/ubuntu/">Linux</a>
-<a href="https://docs.docker.com/engine/install/">Linux</a>
+<a href="https://docs.docker.com/engine/install/">  -  Windows or Mac</a>
 
-After installing docker engine install docker compose
-
+<li>After installing docker engine install docker compose</li>
 <a href="https://docs.docker.com/compose/install/">Linux Windows Mac</a>
+</li>
+
+
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. To obtain my repository you must create a folder in a desired directory and within this folder open a terminal or use cmd in the case of windows.
 2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+   git remote add origin git@github.com:aldomatus/flask_rest_api.git
+   
    ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
+3. In the folder where docker-compose.yml is located, open a terminal (the same address where you ran the previous line) and write the following command to build the image.
    ```
+   docker-compose build
+   ```
+4. Once the previous execution is finished, you must run the services made in the build.
+   ```
+   docker-compose up
+   ```
+5. If all goes well, our application should already be executing the app.py file with python using the mysql database, now we just have to check by entering the following link in our browser:
 
+   ```
+   http://localhost:5000/
+   ```
+6. You should have a response like this:
+   ```
+   {"message": "Welcome to my API"}
+   ```
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+With this base you can make any flask code, modify the API and adapt it to your projects. It is important that you study the docker code to understand what is behind each file in both the Docker and the docker-compose.yml.
 
 
 
@@ -180,7 +190,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Your Name - [](https://twitter.com/your_username)
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
