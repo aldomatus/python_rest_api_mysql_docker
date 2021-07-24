@@ -138,7 +138,7 @@ With this base you can make any flask code, modify the API and adapt it to your 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/aldomatus/flask_rest_api/issues) for a list of proposed features (and known issues).
 
 
 
