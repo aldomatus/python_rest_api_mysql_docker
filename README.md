@@ -165,8 +165,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Aldo Matus - [Linkedin](https://www.linkedin.com/in/aldomatus/)
-Aldo Matus - [Facebook](https://www.facebook.com/aldo.matusmartinez/)
+Aldo Matus - [Linkedin](https://www.linkedin.com/in/aldomatus/) [Facebook](https://www.facebook.com/aldo.matusmartinez/)
 
 Project Link: [Repository](https://github.com/aldomatus/flask_rest_api/)
 
