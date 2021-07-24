@@ -16,7 +16,7 @@
 
   </div>
 
-  <h3 align="center">Learn REST API</h3>
+  <h3 align="center">Learn REST API with Flask, Mysql and Docker</h3>
 
   <p align="center">
     A project for you to learn to work a flask REST api with docker and the mysql database manager!
