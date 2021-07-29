@@ -10,16 +10,48 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(70), unique=True)
+class shipping(db.Model):
+    delivery_number = db.Column(db.Integer, primary_key=True)
+    contents = db.Column(db.String(100), unique=False)
+    product_value = db.Column(db.Integer)
     description = db.Column(db.String(100))
+    delivered = db.column(db.Boolean, default=False)
+    shipping_price = db.Column(db.Integer)
 
-    def __init__(self, title, description):
-        self.title = title
+    def __init__(self, contents, product_value, description, delivered, shipping_price):
+        self.contents = contents
+        self.product_value = product_value
         self.description = description
+        self.delivered = delivered
+        self.shipping_price = shipping_price
+
+
+
 
 db.create_all()
+
+
+
+import csv
+
+def import_data(file):
+    with open(str(file)) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_counter = 0
+        for row in csv_reader:
+            if line_counter != 0:
+                c = Circle(
+                    name=row[0],
+                    slug_name=row[1],
+                    is_public=(False if int(row[2]) == 0 else True),
+                    verified=(False if int(row[3]) == 0 else True),
+                    members_limit=int(row[4])
+                )
+                c.save()
+            line_counter += 1
+
+import_data('circles.csv')
+
 
 class TaskSchema(ma.Schema):
     class Meta:
@@ -28,6 +60,10 @@ class TaskSchema(ma.Schema):
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
+
+
+
+
 
 @app.route('/tasks', methods=['Post'])
 def create_task():
