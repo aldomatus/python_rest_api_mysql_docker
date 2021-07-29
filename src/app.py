@@ -1,22 +1,25 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy import ForeignKey
+import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@db/tasks'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@db/shipping_01'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-
-class shipping(db.Model):
+# Shipping information model
+class Shipping(db.Model):
     delivery_number = db.Column(db.Integer, primary_key=True)
     contents = db.Column(db.String(100), unique=False)
     product_value = db.Column(db.Integer)
     description = db.Column(db.String(100))
     delivered = db.column(db.Boolean, default=False)
     shipping_price = db.Column(db.Integer)
+    shipping_date = db.Column(db.DateTime, default= datetime.datetime.utcnow)
 
     def __init__(self, contents, product_value, description, delivered, shipping_price):
         self.contents = contents
@@ -25,7 +28,34 @@ class shipping(db.Model):
         self.delivered = delivered
         self.shipping_price = shipping_price
 
+# Remitent information model
+class Remitent(db.Model):
+    delivery_number = db.Column(db.Integer, ForeignKey('delivery_number'))
+    name = db.Column(db.String(100), unique=False)
+    last_name = db.Column(db.String(100), unique=False)
+    address = db.Column(db.String(100), unique=False)
+    phone = db.Column(db.String(20), unique=False)
+    
 
+    def __init__(self, name, last_name, address, phone):
+        self.name = name
+        self.last_name = last_name
+        self.address = address
+        self.phone = phone
+
+class Remitent(db.Model):
+    delivery_number = db.Column(db.Integer, ForeignKey('delivery_number'))
+    name = db.Column(db.String(100), unique=False)
+    last_name = db.Column(db.String(100), unique=False)
+    address = db.Column(db.String(100), unique=False)
+    phone = db.Column(db.String(20), unique=False)
+    
+
+    def __init__(self, name, last_name, address, phone):
+        self.name = name
+        self.last_name = last_name
+        self.address = address
+        self.phone = phone
 
 
 db.create_all()
