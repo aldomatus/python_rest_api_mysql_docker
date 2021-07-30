@@ -15,7 +15,7 @@
    <a href="https://www.facebook.com/aldo.matusmartinez" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/facebook.svg" title="Facebook" width="60"  margin="30px"/></a><a href="https://github.com/aldomatus/" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/github.svg" title="Github" width="60"/></a><a href="https://www.instagram.com/aldomatus1/" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/instagram.svg" title="Instagram" width="60"  /></a><a href="https://www.linkedin.com/in/aldomatus/" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/linkedin.svg" title="Linkedin" width="60"  /></a>
 
   </div>
-  <h1 align="center">THIS PROJECT IS MADE TO Cura Deuda ® </h1>
+  <h1 align="center">THIS PROJECT WAS MADE FOR Cura Deuda ® </h1>
   <h3 align="center">Learn REST API with Flask, Mysql and Docker</h3>
 
   <p align="center">
