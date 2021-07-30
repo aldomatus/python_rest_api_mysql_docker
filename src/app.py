@@ -10,10 +10,45 @@ from datetime import datetime
 # For seed script
 import csv
 
+# Security
+from flask import Flask
+from flask_jwt import JWT, jwt_required, current_identity
+from werkzeug.security import safe_str_cmp
+
+# -----------------Security------------------------
+class User(object):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+    def __str__(self):
+        return "User(id='%s')" % self.id
+
+users = [
+    User(1, 'user1', 'abcxyz'),
+]
+
+username_table = {u.username: u for u in users}
+userid_table = {u.id: u for u in users}
+
+def authenticate(username, password):
+    user = username_table.get(username, None)
+    if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
+        return user
+
+def identity(payload):
+    user_id = payload['identity']
+    return userid_table.get(user_id, None)
+
 #-------------------database connection------------
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@db/flask'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '@cura-deuda'
+
+# Security
+jwt = JWT(app, authenticate, identity)
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -321,6 +356,11 @@ def get_state_name(place):
     result = addresses_schema.dump(states)
     return jsonify(result)
 
+#   Testing security
+@app.route('/protected')
+@jwt_required()
+def protected():
+    return '%s' % current_identity
 
 if __name__ == "__main__":
     app.run(debug=True)
