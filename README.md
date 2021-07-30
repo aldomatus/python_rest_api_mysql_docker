@@ -76,9 +76,7 @@ c. Adición de nuevos registros a los recursos.
 9. Empaqueta tu aplicación en un contenedor de Docker
 10. Diseña un sitio web, full responsive para interactuar con tu API.
 
-## Purpose of the project 
-
-  <p align="center"> <span style="font-size:50px;">🚀</span> </p>
+## Purpose of the project 🚀
 This project is made with the intention of teaching how to use Docker with the backend technologies Flask and Mysql in the project we are going to take into account the following points:
 
 * Create the dockerfile that will have the necessary instructions to create a Python image that will later be converted into a single application.
@@ -106,8 +104,6 @@ Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to y
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-
 
 ### Prerequisites
 
@@ -157,7 +153,22 @@ For this project you need to have Docker and Docker compose installed
 
 With this base you can make any flask code, modify the API and adapt it to your projects. It is important that you study the docker code to understand what is behind each file in both the Docker and the docker-compose.yml.
 
+## To obtain the colonies by zip code
+- To obtain the colonies by zip code, you only have to obtain the zip code in the url and use a filter that brings us those colonies with the same zipcode, in the example we sent http: // localhost: 5000 / address / 72000 and it did not bring the json with the colonies with code 72000
+<p align="center">
+  <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
+    <img src="https://i.imgur.com/v6y7AS4.png" alt="Header" >
+  </a>
+</p>
+## For the search of colonies by name
+For the search of colonies by name,something similar to the search by postal code was done, it is only necessary to write the name of the colony to search in the link as shown below:
+http: // localhost: 5000 / address / nameplaces / Centro
 
+<p align="center">
+  <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
+    <img src="https://i.imgur.com/nwUslJq.png" alt="Header" >
+  </a>
+</p>
 
 <!-- ROADMAP -->
 ## Roadmap
