@@ -38,7 +38,7 @@ class AddressSchema(ma.Schema):
       fields = ("id", "postal_code", "state", "municipality", "city", "colony")
 
 address_schema = AddressSchema()
-address_schema = AddressSchema(many=True)
+addresses_schema = AddressSchema(many=True)
 
 # Shipping information model
 class Shipping(db.Model):
@@ -101,54 +101,49 @@ class Destinatary(db.Model):
 
 db.create_all()
 
-# class TaskSchema(ma.Schema):
-#     class Meta:
-#         fields = ('id', 'title', 'description')
+def import_data(file):
+    with open(str(file)) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_counter = 0
+        for row in csv_reader:
+            if line_counter != 0:
+                if line_counter == 100:
+                    print('hola')
+                postal_code=row[0]
+                colony=row[1]
+                municipality=row[3],
+                state=row[4]
+                city=row[5]
+                
+                new_address= Address(postal_code, state, municipality, city, colony)
+                db.session.add(new_address)
+                db.session.commit()
+            line_counter += 1
 
-# task_schema = TaskSchema()
-# tasks_schema = TaskSchema(many=True)
-
-
-# def import_data(file):
-#     with open(str(file)) as csv_file:
-#         csv_reader = csv.reader(csv_file, delimiter=',')
-#         line_counter = 0
-#         for row in csv_reader:
-#             if line_counter != 0:
-#                 c = Circle(
-#                     name=row[0],
-#                     slug_name=row[1],
-#                     is_public=(False if int(row[2]) == 0 else True),
-#                     verified=(False if int(row[3]) == 0 else True),
-#                     members_limit=int(row[4])
-#                 )
-#                 c.save()
-#             line_counter += 1
-
-# import_data('puebla.csv')
+import_data('puebla.csv')
 
 
 
 
 
-@app.route('/address', methods=['POST'])
-def create_address():
-  title = request.json['title']
-  description = request.json['description']
+# @app.route('/address', methods=['POST'])
+# def create_address():
+#     # Receive requests
+#     postal_code = request.json['postal_code']
+#     state = request.json['state']
+#     municipality = request.json['municipality']
+#     city = request.json['city']
+#     colony = request.json['colony']
 
-  postal_code = request.json['postal_code']
-  state = request.json['state']
-  municipality = request.json['municipality']
-  city = request.json['title']
-  colony = request.json['title']
+#     new_address= Address(postal_code, state, municipality, city, colony)
 
-  new_task= Task(title, description)
+#     db.session.add(new_address)
+#     db.session.commit()
 
-  db.session.add(new_task)
-  db.session.commit()
+#     return address_schema.jsonify(new_address)
 
-  return task_schema.jsonify(new_task)
 
+# /--------------------------------------------------------
 # @app.route('/tasks', methods=['GET'])
 # def get_tasks():
 #   all_tasks = Task.query.all()
