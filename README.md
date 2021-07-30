@@ -429,6 +429,115 @@ def create_address():
   </a>
 </p>
 
+
+### Save a customer submission service to the database 👨 👨 👨 
+To add a parcel delivery record
+We use the post method to receive the data from the front-end, then we save the data sent by request in variables which with SQLALchemy we can put into the database, at the end we commit so that our data is registered in mysql and that's it! we have a shipment saved.
+
+I have a fake log file for testing 🧪🧪🧪
+```python
+{
+"_comment": "shipping--------------------------",
+"contents": "Books", 
+"product_value": 1000, 
+"description": "artificial intelligence and math books", 
+"delivered": 1, 
+"shipping_price": 20,
+"__comment2__": "Remitent address--------------",
+"postal_code_r": "68000",
+"state_r": "Oaxaca", 
+"municipality_r": "Huajuapan", 
+"city_r": "Huajuapan", 
+"colony_r": "Reforma",
+"__comment3__": "Remitent info-----------------",
+"name_r": "Pedro", 
+"last_name_r": "Lopez", 
+"address_r": "Merida Yucatan", 
+"phone_r": "955768952", 
+"postal_code_r": "72000",
+"__comment4__": "Destinatary address-----------",
+"postal_code_d": "68000",
+"state_d": "Oaxaca", 
+"municipality_d": "Huajuapan", 
+"city_d": "Huajuapan", 
+"colony_d": "Reforma",
+"__comment5__": "Destinatary info--------------",
+"name_d": "Pedro", 
+"last_name_d": "Lopez", 
+"address_model_d": "Merida Yucatan", 
+"phone_d": "955744982", 
+"postal_code_d": "72000"
+}
+
+```
+**Save parcel service records**
+```python
+@app.route('/shippings', methods=['POST', 'GET'])
+def create_shipping():
+
+    # Receive requests
+    if request.method == 'POST':
+
+        # shipping information
+        contents = request.json['contents']
+        product_value = request.json['product_value']
+        description = request.json['description']
+        delivered = request.json['delivered']
+        shipping_price = request.json['shipping_price']
+        shipping_date = datetime.today()
+
+        new_shipping= Shipping(contents, product_value, description, delivered, shipping_price, shipping_date)
+        db.session.add(new_shipping)
+        
+
+        # Remitent information
+        name_r = request.json['name_r']
+        last_name_r = request.json['last_name_r']
+        phone_r = request.json['phone_r']
+
+        postal_code_r = request.json['postal_code_r']
+        state_r = request.json['state_r']
+        municipality_r = request.json['municipality_r']
+        city_r = request.json['city_r']
+        colony_r = request.json['colony_r']
+
+        new_address_r= RemitentAddress(postal_code_r, state_r, municipality_r, city_r, colony_r)
+        db.session.add(new_address_r)
+
+        new_remitent = Remitent(name_r, last_name_r, phone_r)
+        db.session.add(new_remitent)
+
+        # Destinatary information
+        name_d = request.json['name_d']
+        last_name_d = request.json['last_name_d']
+        address_model_d = request.json['address_model_d']
+        phone_d = request.json['phone_d']
+        postal_code_d = request.json['postal_code_d']
+
+        postal_code_d = request.json['postal_code_d']
+        state_d = request.json['state_d']
+        municipality_d = request.json['municipality_d']
+        city_d = request.json['city_d']
+        colony_d = request.json['colony_d']
+        
+        new_address_d= DestinataryAddress(postal_code_d, state_d, municipality_d, city_d, colony_d)
+        db.session.add(new_address_d)
+
+        new_destinatary= Destinatary(name_d, last_name_d, address_model_d, phone_d, postal_code_d)
+        db.session.add(new_destinatary)
+
+        db.session.commit()
+        return destinatary_schema.jsonify(new_destinatary)
+
+
+    return jsonify({'message': 'Data stored successfully!'})
+```
+<p align="center">
+  <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
+    <img src="https://i.imgur.com/ilWl4X3.png" alt="Header" >
+  </a>
+</p>
+
 <!-- ROADMAP -->
 ## Roadmap
 
