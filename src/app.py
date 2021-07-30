@@ -79,8 +79,6 @@ class Remitent(db.Model):
         self.phone = phone
         
 
-
-
 # Destinatary information model
 class Destinatary(db.Model):
     __tablename__= 'destinatary'
@@ -101,7 +99,11 @@ class Destinatary(db.Model):
 
 db.create_all()
 
+# Seed script
 def import_data(file):
+    """
+    Seed script to import SEPOMEX data to MySQL database
+    """
     with open(str(file)) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_counter = 0
@@ -123,24 +125,43 @@ def import_data(file):
 import_data('puebla.csv')
 
 
+@app.route('/address', methods=['POST'])
+def create_address():
+    # Receive requests
+    if request.method == 'POST':
+        postal_code = request.json['postal_code']
+        state = request.json['state']
+        municipality = request.json['municipality']
+        city = request.json['city']
+        colony = request.json['colony']
 
+        new_address= Address(postal_code, state, municipality, city, colony)
 
+        db.session.add(new_address)
+        db.session.commit()
 
-# @app.route('/address', methods=['POST'])
-# def create_address():
-#     # Receive requests
-#     postal_code = request.json['postal_code']
-#     state = request.json['state']
-#     municipality = request.json['municipality']
-#     city = request.json['city']
-#     colony = request.json['colony']
+        return address_schema.jsonify(new_address)
 
-#     new_address= Address(postal_code, state, municipality, city, colony)
+    if request.method == 'GET':
+        
+        postal_code_colonies = Address.query.filter_by(username='peter').first()
+        postal_code = request.json['postal_code']
 
-#     db.session.add(new_address)
-#     db.session.commit()
+@app.route('/address', methods=['POST', 'GET'])
+def create_shipping():
+    # Receive requests
+    postal_code = request.json['postal_code']
+    state = request.json['state']
+    municipality = request.json['municipality']
+    city = request.json['city']
+    colony = request.json['colony']
 
-#     return address_schema.jsonify(new_address)
+    new_address= Address(postal_code, state, municipality, city, colony)
+
+    db.session.add(new_address)
+    db.session.commit()
+
+    return address_schema.jsonify(new_address)
 
 
 # /--------------------------------------------------------
