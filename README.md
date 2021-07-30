@@ -104,6 +104,22 @@ Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to y
 
 <!-- GETTING STARTED -->
 ## Getting Started
+### To check your rest api
+#### Insomnia
+
+With their streamlined API client, you can quickly and easily send REST, SOAP, GraphQL, and GRPC requests directly within Insomnia.
+Link to visit insomnia website: - [Link](https://insomnia.rest/download)
+<div align="center">
+ <img src=https://seeklogo.com/images/I/insomnia-logo-A35E09EB19-seeklogo.com.png width="150" alt="Header" >
+  </div>
+
+
+#### Postman
+Postman is a collaboration platform for API development. Postman's features simplify each step of building an API and streamline collaboration so you can create better APIs—faster.
+Link to visit postman website: - [Link](https://www.postman.com/downloads/)
+<div align="center">
+ <img src=https://seeklogo.com/images/P/postman-logo-F43375A2EB-seeklogo.com.png width="150" alt="Header" >
+</div>
 
 ### Prerequisites
 
@@ -129,11 +145,19 @@ For this project you need to have Docker and Docker compose installed
    git remote add origin git@github.com:aldomatus/python_rest_api_mysql_docker.git
    
    ```
-3. In the folder where docker-compose.yml is located, open a terminal (the same address where you ran the previous line) and write the following command to build the image.
+3. Make the pull request from a branch called main
+   ```
+   git pull origin main --allow-unrelated-histories
+   
+   ```
+  > git branch -m main is the command to rename the branch
+ 
+
+4. In the folder where docker-compose.yml is located, open a terminal (the same address where you ran the previous line) and write the following command to build the image.
    ```
    docker-compose build
    ```
-4. Once the previous execution is finished, you must run the services made in the build.
+5. Once the previous execution is finished, you must run the services made in the build.
    ```
    docker-compose up
    ```
@@ -155,49 +179,147 @@ For this project you need to have Docker and Docker compose installed
    USE flask;
    ```
 9. We do a query, and if the script has not given you problems you can see something like this:
-   ```
+   ```sql
    
-   mysql> select * from address;
-
-   +----+-------------+--------+--------------+------------+----------------+-------------+
-   | id | postal_code | state  | municipality | city       | colony         | remitent_id |
-   +----+-------------+--------+--------------+------------+----------------+-------------+
-   |  1 | 68256       | Oaxaca | Etla         | Oaxaca cty | Guadalupe Etla |        NULL |
-   |  2 | 68257       | Oaxaca | Etla         | Oaxaca cty | Guadalupe Etla |        NULL |
-   +----+-------------+--------+--------------+------------+----------------+-------------+
+    mysql> SELECT * FROM address limit 5;
+   +----+-------------+--------+--------------+----------------------------+--------------------------------+
+   | id | postal_code | state  | municipality | city                       | colony                         |
+   +----+-------------+--------+--------------+----------------------------+--------------------------------+
+   |  1 | 72000       | Puebla | Puebla       | Heroica Puebla de Zaragoza | Centro                         |
+   |  2 | 72000       | Puebla | Puebla       | Heroica Puebla de Zaragoza | San Francisco                  |
+   |  3 | 72010       | Puebla | Puebla       | Heroica Puebla de Zaragoza | Santa Mar�a la Rivera          |
+   |  4 | 72010       | Puebla | Puebla       | Heroica Puebla de Zaragoza | INFONAVIT Bosques 5 de Febrero |
+   |  5 | 72010       | Puebla | Puebla       | Heroica Puebla de Zaragoza | Residencial Santa Mar�a        |
+   +----+-------------+--------+--------------+----------------------------+--------------------------------+
 
    ```
-11. If all goes well, our application should already be executing the app.py file with python using the mysql database, now we just have to check by entering the following link in our browser:
+10. Now we are ready to work and query from sql alchemy
+
+12. If all goes well, our application should already be executing the app.py file with python using the mysql database, now we just have to check by entering the following link in our browser:
 
    ```
    http://localhost:5000/
    ```
 6. You should have a response like this:
    ```
-   {"message": "Welcome to my API"}
+   {"message": 'Welcome to Cura Deuda ® API'}
    ```
+## Description of the files 💼 🐳
+
+###requirements.txt
+In our requirements file we write the flask libraries, the connection libraries for msql and with which we are going to manage the SQL data
+```python
+  
+flask
+Flask-SQLAlchemy==2.4.4
+SQLAlchemy==1.3.20
+pymysql
+marshmallow-sqlalchemy
+Flask-Migrate==2.5.3
+Flask-Script==2.0.6
+Flask-Cors==3.0.9
+requests==2.25.0
+flask-marshmallow
+pika==1.1.0
+```
+
+###Dockerfile 🐳
+In our requirements file we write the flask libraries, the connection libraries for msql and with which we are going to manage the SQL data
+```docker
+  
+FROM python:3.7-alpine
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /code
+WORKDIR /code
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 5000
+COPY . .
+CMD ["flask", "run"]
+```
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
+<!-- EXPLAIN CODE -->
+## Description of the REST API code
 With this base you can make any flask code, modify the API and adapt it to your projects. It is important that you study the docker code to understand what is behind each file in both the Docker and the docker-compose.yml.
 
-
-## To obtain the colonies by zip code
+### To obtain the colonies by zip code
 - To obtain the colonies by zip code, you only have to obtain the zip code in the url and use a filter that brings us those colonies with the same zipcode, in the example we sent http: // localhost: 5000 / address / 72000 and it did not bring the json with the colonies with code 72000
+```python
+  
+# Search for colonies by zip code
+@app.route('/address/cp/<string:postal_code>', methods=['GET'])
+def get_colonies(postal_code):
+    colonies = Address.query.filter_by(postal_code=postal_code).all()
+    result = addresses_schema.dump(colonies)
+    return jsonify(result)
+```
 <p align="center">
   <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
     <img src="https://i.imgur.com/v6y7AS4.png" alt="Header" >
   </a>
 </p>
-## For the search of colonies by name
+### For the search of colonies by name
 For the search of colonies by name,something similar to the search by postal code was done, it is only necessary to write the name of the colony to search in the link as shown below:
 http: // localhost: 5000 / address / nameplaces / Centro
+
+```python
+  
+# search for colonies, municipalities and states by name
+@app.route('/address/nameplaces/<string:place>', methods=['GET'])
+def get_places(place):
+    colonies = Address.query.filter_by(colony=place).all()
+    result = addresses_schema.dump(colonies)
+    return jsonify(result)
+```
 
 <p align="center">
   <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
     <img src="https://i.imgur.com/nwUslJq.png" alt="Header" >
+  </a>
+</p>
+
+### To add new records
+we create our json to send, and we send it with the POST method, the api responds with the data that was saved in the database
+we create our json to send
+```json
+{
+"postal_code": "45672",
+"state": "Yucatán", 
+"municipality": "Guadalupe", 
+"city": "Mérida", 
+"colony": "Centro"
+}
+```
+
+
+```python
+# To create news addresses
+@app.route('/address', methods=['POST'])
+def create_address():
+    # Receive requests
+    if request.method == 'POST':
+        postal_code = request.json['postal_code']
+        state = request.json['state']
+        municipality = request.json['municipality']
+        city = request.json['city']
+        colony = request.json['colony']
+
+        new_address= RemitentAddress(postal_code, state, municipality, city, colony)
+
+        db.session.add(new_address)
+        db.session.commit()
+
+        return address_schema.jsonify(new_address)
+```
+<p align="center">
+  <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
+    <img src="https://i.imgur.com/SDh8PkY.png" alt="Header" >
   </a>
 </p>
 
