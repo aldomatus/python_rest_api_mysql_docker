@@ -137,7 +137,37 @@ For this project you need to have Docker and Docker compose installed
    ```
    docker-compose up
    ```
-5. If all goes well, our application should already be executing the app.py file with python using the mysql database, now we just have to check by entering the following link in our browser:
+5. Inside the project folder open another command terminal and type the following to enter interactive mode and enter mysql
+   ```
+   docker-compose exec db bash
+   ```
+6. Then we enter mysql from the command console, it will ask you for a password, type root
+   ```
+   mysql -h localhost -u root -p
+   ```
+7. We create our database
+   ```
+   CREATE DATABASE flask;
+   ```
+   
+8. We enter the database
+   ```
+   USE flask;
+   ```
+9. We do a query, and if the script has not given you problems you can see something like this:
+   ```
+   
+   mysql> select * from address;
+
+   +----+-------------+--------+--------------+------------+----------------+-------------+
+   | id | postal_code | state  | municipality | city       | colony         | remitent_id |
+   +----+-------------+--------+--------------+------------+----------------+-------------+
+   |  1 | 68256       | Oaxaca | Etla         | Oaxaca cty | Guadalupe Etla |        NULL |
+   |  2 | 68257       | Oaxaca | Etla         | Oaxaca cty | Guadalupe Etla |        NULL |
+   +----+-------------+--------+--------------+------------+----------------+-------------+
+
+   ```
+11. If all goes well, our application should already be executing the app.py file with python using the mysql database, now we just have to check by entering the following link in our browser:
 
    ```
    http://localhost:5000/
@@ -152,6 +182,7 @@ For this project you need to have Docker and Docker compose installed
 ## Usage
 
 With this base you can make any flask code, modify the API and adapt it to your projects. It is important that you study the docker code to understand what is behind each file in both the Docker and the docker-compose.yml.
+
 
 ## To obtain the colonies by zip code
 - To obtain the colonies by zip code, you only have to obtain the zip code in the url and use a filter that brings us those colonies with the same zipcode, in the example we sent http: // localhost: 5000 / address / 72000 and it did not bring the json with the colonies with code 72000
