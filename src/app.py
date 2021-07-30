@@ -16,14 +16,15 @@ ma = Marshmallow(app)
 
 # Address information model
 class Address(db.Model):
+    __tablename__= 'address'
     id = db.Column(db.Integer, primary_key=True)
     postal_code = db.Column(db.String(10))
     state = db.Column(db.String(30), unique=False)
     municipality = db.Column(db.String(100), unique=False)
     city = db.Column(db.String(100), unique=False)
     colony = db.Column(db.String(100), unique=False)
-    
-    remitent_id = db.Column(db.Integer, db.ForeignKey('remitent.id'))
+
+    remitent_id = db.Column(db.Integer, db.ForeignKey('remitent.delivery_number'))
 
     def __init__(self, postal_code, state, municipality, city, colony):
         self.postal_code = postal_code
@@ -32,8 +33,16 @@ class Address(db.Model):
         self.city = city
         self.colony = colony
 
+class AddressSchema(ma.Schema):
+    class Meta:
+      fields = ("id", "postal_code", "state", "municipality", "city", "colony")
+
+address_schema = AddressSchema()
+address_schema = AddressSchema(many=True)
+
 # Shipping information model
 class Shipping(db.Model):
+    __tablename__= 'shipping'
     delivery_number = db.Column(db.Integer, primary_key=True)
     contents = db.Column(db.String(100), nullable=False, unique=False)
     product_value = db.Column(db.Float)
@@ -41,6 +50,7 @@ class Shipping(db.Model):
     delivered = db.Column(db.Boolean, default=False)
     shipping_price = db.Column(db.Float)
     shipping_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    
     remitent_id = db.Column(db.Integer, db.ForeignKey('remitent.delivery_number'))
 
     def __init__(self, contents, product_value, description, delivered, shipping_price, shipping_date):
@@ -53,32 +63,34 @@ class Shipping(db.Model):
 
 # Remitent information model
 class Remitent(db.Model):
-    delivery_number = db.Column(db.Integer)
+    __tablename__= 'remitent'
+
+    delivery_number = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False, nullable=False)
     last_name = db.Column(db.String(100), unique=False, nullable=False)
     phone = db.Column(db.String(20), unique=True, nullable=False)
-    shippings = db.relationship('Shipping', backref='remitent', lazy=True)
-    address = db.relationship('Address', backref='remitent', lazy=True)
 
-    def __init__(self, name, last_name, address, phone):
+    shippings = db.relationship('Shipping')
+    address = db.relationship('Address')
+
+    def __init__(self, name, last_name, phone):
         self.name = name
         self.last_name = last_name
-        self.address = address
         self.phone = phone
-        self.shippings = shippings 
-        self.address = address
         
 
 
 
 # Destinatary information model
 class Destinatary(db.Model):
-    delivery_number = db.Column(db.Integer, ForeignKey('delivery_number'))
+    __tablename__= 'destinatary'
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False)
     last_name = db.Column(db.String(100), unique=False)
     address = db.Column(db.String(100), unique=False)
     phone = db.Column(db.String(20), unique=False)
     postal_code = db.Column(db.String(10))
+    remitent_id = db.Column(db.Integer, db.ForeignKey('remitent.delivery_number'))
 
     def __init__(self, name, last_name, address, phone, postal_code):
         self.name = name
@@ -87,8 +99,14 @@ class Destinatary(db.Model):
         self.phone = phone
         self.postal_code = postal_code
 
-
 db.create_all()
+
+# class TaskSchema(ma.Schema):
+#     class Meta:
+#         fields = ('id', 'title', 'description')
+
+# task_schema = TaskSchema()
+# tasks_schema = TaskSchema(many=True)
 
 
 # def import_data(file):
@@ -110,26 +128,26 @@ db.create_all()
 # import_data('puebla.csv')
 
 
-# class TaskSchema(ma.Schema):
-#     class Meta:
-#         fields = ('id', 'title', 'description')
 
 
-# task_schema = TaskSchema()
-# tasks_schema = TaskSchema(many=True)
 
+@app.route('/address', methods=['POST'])
+def create_address():
+  title = request.json['title']
+  description = request.json['description']
 
-# @app.route('/tasks', methods=['Post'])
-# def create_task():
-#   title = request.json['title']
-#   description = request.json['description']
+  postal_code = request.json['postal_code']
+  state = request.json['state']
+  municipality = request.json['municipality']
+  city = request.json['title']
+  colony = request.json['title']
 
-#   new_task= Task(title, description)
+  new_task= Task(title, description)
 
-#   db.session.add(new_task)
-#   db.session.commit()
+  db.session.add(new_task)
+  db.session.commit()
 
-#   return task_schema.jsonify(new_task)
+  return task_schema.jsonify(new_task)
 
 # @app.route('/tasks', methods=['GET'])
 # def get_tasks():
