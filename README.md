@@ -135,9 +135,29 @@ For this project you need to have Docker and Docker compose installed
 <a href="https://docs.docker.com/compose/install/">Linux Windows Mac</a>
 </li>
 
+### knowing our data
+First we analyze the SEPOMEX data to select the data that is important to us for the process of creating our application 
+
+The Mexican Postal Service, Correos de México has the function of keeping the population communicated by offering accessible, reliable and quality correspondence, messaging and parcel services, with the mission of being a factor of inclusion of the population, facilitator of economic activity and guarantor of interpersonal communications. 
+<div align="center">
+ <img src=https://4.bp.blogspot.com/-PmNkfNoApz8/WrW0kFJ--fI/AAAAAAAAA04/Twmw29bZNfwBEmwkoiFnrZmbFurywfZ5wCLcBGAs/s1600/Sepomex-1802342.jpg width=250 alt="Header" >
+</div>
 
 
-### Installation
+
+#### The columns selected for the project were colored blue, these are the data that will serve us for our application 🔵
+<div align="center">
+ <img src=https://i.imgur.com/jjsjTjS.png alt="Header" >
+</div>
+
+### Entity relationship model
+For the construction of the database, the relationship entity model was made with which the relationships between each table were deduced. 
+<div align="center">
+ <img src=https://i.imgur.com/lecY2Qo.jpg width=500 alt="Header" >
+</div>
+
+
+### Installation 🖥
 
 1. To obtain my repository you must create a folder in a desired directory and within this folder open a terminal or use cmd in the case of windows.
 2. Clone the repo
