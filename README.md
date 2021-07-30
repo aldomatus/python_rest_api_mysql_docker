@@ -206,10 +206,9 @@ For this project you need to have Docker and Docker compose installed
    ```
 ## Description of the files 💼 🐳
 
-###requirements.txt
+### requirements.txt
 In our requirements file we write the flask libraries, the connection libraries for msql and with which we are going to manage the SQL data
 ```python
-  
 flask
 Flask-SQLAlchemy==2.4.4
 SQLAlchemy==1.3.20
@@ -223,8 +222,12 @@ flask-marshmallow
 pika==1.1.0
 ```
 
-###Dockerfile 🐳
-In our requirements file we write the flask libraries, the connection libraries for msql and with which we are going to manage the SQL data
+### Dockerfile 🐳
+Create the dockerfile that will have the necessary instructions to create a Python image that will later be converted into a single application.
+- we add our environment variables from flask
+- We run the requirements file so that our libraries are installed
+- We expose the port to use which is 5000
+- With CMD we start Flask 
 ```docker
   
 FROM python:3.7-alpine
@@ -239,6 +242,47 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY . .
 CMD ["flask", "run"]
+```
+
+
+### Docker-compose 🐳🐳🐳
+Docker Compose allows you through YAML files to instruct the Docker Engine to perform tasks, programmatically. Here we will install the mysql image, declare the environment variables for both mysql and Flask, and also declare the volumes.
+
+  - we download the image
+  - volumes
+  - Environment Variables
+  - ports
+
+
+```script
+version: "3.8"
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - .dbdata:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shipping_01  
+      MYSQL_PASSWORD: root
+    ports: 
+      - 3307:3306
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  
+    
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+
+    env_file: .env
 ```
 
 
