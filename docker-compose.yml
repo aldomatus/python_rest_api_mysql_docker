@@ -8,10 +8,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tasks   
+      MYSQL_DATABASE: shipping_01  
       MYSQL_PASSWORD: root
     ports: 
-      - 3306:3306
+      - 3307:3306
 
   backend:
     build:
