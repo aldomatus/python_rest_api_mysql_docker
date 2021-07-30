@@ -239,7 +239,7 @@ def import_data(file):
                 db.session.commit()
             line_counter += 1
 
-import_data('puebla.csv')
+import_data('data.csv')
 
 #----------------REST APIS---------------------------
 # Welcome to Cura Deuda ® API
