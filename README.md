@@ -203,8 +203,61 @@ For this project you need to have Docker and Docker compose installed
 6. You should have a response like this:
    ```
    {"message": 'Welcome to Cura Deuda ® API'}
+  
    ```
+
+## How to load the data to the database 📂📂📂
+I built a script to load the data with the help of the csv and sqlalchemy library as follows: 
+1. We load the csv data
+2. We read it with csv.reader
+3. This file is delimited by commas
+4. We started a counter to avoid the title line
+5. We save the data in each extraction in its corresponding variable
+6. We use sqlalchemy to send the data to mysql with the model 
+
+
+```python
+#-----------------Upload the SEPOMEX files to the database---------------
+# Seed script
+def import_data(file):
+    """
+    Seed script to import SEPOMEX data to MySQL database
+    """
+    with open(str(file)) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_counter = 0
+        for row in csv_reader:
+            if line_counter != 0:
+                if line_counter == 100:
+                    print('hola')
+                postal_code=row[0]
+                colony=row[1]
+                municipality=row[3],
+                state=row[4]
+                city=row[5]
+                
+                new_address= Address(postal_code, state, municipality, city, colony)
+                db.session.add(new_address)
+                db.session.commit()
+            line_counter += 1
+
+import_data('puebla.csv')
+```
+
 ## Description of the files 💼 🐳
+```python
+flask
+Flask-SQLAlchemy==2.4.4
+SQLAlchemy==1.3.20
+pymysql
+marshmallow-sqlalchemy
+Flask-Migrate==2.5.3
+Flask-Script==2.0.6
+Flask-Cors==3.0.9
+requests==2.25.0
+flask-marshmallow
+pika==1.1.0
+```
 
 ### requirements.txt
 In our requirements file we write the flask libraries, the connection libraries for msql and with which we are going to manage the SQL data
