@@ -22,6 +22,7 @@ class Address(db.Model):
     municipality = db.Column(db.String(100), unique=False)
     city = db.Column(db.String(100), unique=False)
     colony = db.Column(db.String(100), unique=False)
+    
     remitent_id = db.Column(db.Integer, db.ForeignKey('remitent.id'))
 
     def __init__(self, postal_code, state, municipality, city, colony):
@@ -64,8 +65,9 @@ class Remitent(db.Model):
         self.last_name = last_name
         self.address = address
         self.phone = phone
+        self.shippings = shippings 
         self.address = address
-        self.shippings = shippings
+        
 
 
 
