@@ -15,7 +15,7 @@
    <a href="https://www.facebook.com/aldo.matusmartinez" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/facebook.svg" title="Facebook" width="60"  margin="30px"/></a><a href="https://github.com/aldomatus/" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/github.svg" title="Github" width="60"/></a><a href="https://www.instagram.com/aldomatus1/" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/instagram.svg" title="Instagram" width="60"  /></a><a href="https://www.linkedin.com/in/aldomatus/" ><img src="https://github.com/edent/SuperTinyIcons/blob/master/images/svg/linkedin.svg" title="Linkedin" width="60"  /></a>
 
   </div>
-
+  <h1 align="center">THIS PROJECT IS MADE TO Cura Deuda ® </h1>
   <h3 align="center">Learn REST API with Flask, Mysql and Docker</h3>
 
   <p align="center">
@@ -54,7 +54,31 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+Problema
+Gustavo quiere iniciar un negocio de envíos por paquetería y le gustaría contar con la
+información de Estados, Municipios, Colonias ligados a SEPOMEX.
+1. Obten una copia de la información expuesta en el sitio de SEPOMEX
+2. Modela las tablas para la información de SEPOMEX.
+a. Separa la información en, por lo menos, 3 tablas: Estado, Municipio, Colonia
+b. Relaciona tus tablas por medio de sus identificadores diseñados por
+SEPOMEX
+3. Desarrolla una técnica de carga de los datos a partir de la información de SEPOMEX
+que pueda ejecutarse a demanda (seed script).
+4. Crea un API para obtener los datos del registro de cada recurso modelado.
+a. El intercambio de datos se debe dar por medio de la estructura JSON.
+5. Permita a tu API por lo menos:
+a. Búsqueda de colonias por CP
+b. Búsqueda de colonias, municipios, estados por nombre
+c. Adición de nuevos registros a los recursos.
+6. Agrega el manejo de errores.
+7. Agrega una capa de seguridad a tu API (Basic Auth, Token, APIkey, etc.)
+8. Muestra tu proyecto live en alguna plataforma en la nube.
+9. Empaqueta tu aplicación en un contenedor de Docker
+10. Diseña un sitio web, full responsive para interactuar con tu API.
 
+## Purpose of the project 
+
+  <p align="center"> <span style="font-size:50px;">🚀</span> </p>
 This project is made with the intention of teaching how to use Docker with the backend technologies Flask and Mysql in the project we are going to take into account the following points:
 
 * Create the dockerfile that will have the necessary instructions to create a Python image that will later be converted into a single application.
@@ -106,7 +130,7 @@ For this project you need to have Docker and Docker compose installed
 1. To obtain my repository you must create a folder in a desired directory and within this folder open a terminal or use cmd in the case of windows.
 2. Clone the repo
    ```
-   git remote add origin git@github.com:aldomatus/flask_rest_api.git
+   git remote add origin git@github.com:aldomatus/python_rest_api_mysql_docker.git
    
    ```
 3. In the folder where docker-compose.yml is located, open a terminal (the same address where you ran the previous line) and write the following command to build the image.
