@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: shipping_01  
+      MYSQL_DATABASE: flask 
       MYSQL_PASSWORD: root
     ports: 
       - 3307:3306
