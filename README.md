@@ -371,6 +371,19 @@ FLASK_APP=src/app.py
 FLASK_RUN_HOST=0.0.0.0
 ALLOWED_HOSTS=127.0.0.1,localhost
 ```
+### Project structure 
+To make the modularization of our project we can make use of blueprints 
+
+#### Use of Blueprints
+Blueprints: they are a series of routes that we can integrate into our application but in another directory that is, it will allow me to modulate the application into small applications that do specific things such as authentication or the welcome part, or if we have a task dashboard for Example we would also create a blueprint for the specific tasks and it is easier to handle.
+
+- The blue squares represent folders and the yellow figures are the files
+
+<p align="center">
+  <a href="https://github.com/aldomatus/python_rest_api_mysql_docker">
+    <img src="https://raw.githubusercontent.com/innacroft/Apptask/master/app/static/images/estructura_carpetas.PNG" alt="Header" >
+  </a>
+</p>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
